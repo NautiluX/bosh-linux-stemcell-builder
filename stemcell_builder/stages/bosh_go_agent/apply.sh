@@ -30,17 +30,18 @@ wget -O /usr/bin/meta4 https://github.com/dpb587/metalink/releases/download/v0.2
   && chmod +x /usr/bin/meta4
 
 os_type="$(get_os_type)"
+bosh_agent_version=$(cat ${assets_dir}/bosh-agent-version)
 if [ "${os_type}" == "ubuntu" ] && [ "${DISTRIB_CODENAME}" == "trusty" ]; then
   if is_ppc64le; then
-    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-ppc64le bosh-agent
+    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-${bosh_agent_version}-go-1.8-linux-ppc64le bosh-agent
   else
-    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-amd64 bosh-agent
+    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-${bosh_agent_version}-go-1.8-linux-amd64 bosh-agent
   fi
 else
   if is_ppc64le; then
-    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-linux-ppc64le bosh-agent
+    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-${bosh_agent_version}-linux-ppc64le bosh-agent
   else
-    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-linux-amd64 bosh-agent
+    /usr/bin/meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-${bosh_agent_version}-linux-amd64 bosh-agent
   fi
 fi
 
