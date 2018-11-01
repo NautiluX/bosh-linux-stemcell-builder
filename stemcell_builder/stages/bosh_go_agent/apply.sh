@@ -25,18 +25,22 @@ ln -s /etc/sv/monit /etc/service/monit
 cp -a $assets_dir/alerts.monitrc $chroot/var/vcap/monit/alerts.monitrc
 cd $assets_dir
 
+wget -O /usr/bin/meta4 https://github.com/dpb587/metalink/releases/download/v0.2.0/meta4-0.2.0-linux-amd64 \
+  && echo "81a592eaf647358563f296aced845ac60d9061a45b30b852d1c3f3674720fe19  /usr/bin/meta4" | shasum -a 256 -c \
+  && chmod +x /usr/bin/meta4
+
 os_type="$(get_os_type)"
 if [ "${os_type}" == "ubuntu" ] && [ "${DISTRIB_CODENAME}" == "trusty" ]; then
   if is_ppc64le; then
-    meta4 file-download --metalink=metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-ppc64le bosh-agent
+    meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-ppc64le bosh-agent
   else
-    meta4 file-download --metalink=metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-amd64 bosh-agent
+    meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-go-1.8-linux-amd64 bosh-agent
   fi
 else
   if is_ppc64le; then
-    meta4 file-download --metalink=metalink.meta4 --file=bosh-agent-2.160.0-linux-ppc64le bosh-agent
+    meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-linux-ppc64le bosh-agent
   else
-    meta4 file-download --metalink=metalink.meta4 --file=bosh-agent-2.160.0-linux-amd64 bosh-agent
+    meta4 file-download --metalink=${assets_dir}/metalink.meta4 --file=bosh-agent-2.160.0-linux-amd64 bosh-agent
   fi
 fi
 
